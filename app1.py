@@ -14,7 +14,7 @@ def load_data(file_path):
         st.error(f"Error: Could not find the file at {file_path}. Please check the file path.")
         return None
 
-file_path = r'C:\Users\admin\Music\My\merged_movies_sorted.csv'
+file_path = 'merged_movies_sorted.csv'
 movies_df = load_data(file_path)
 
 if movies_df is not None:
