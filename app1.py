@@ -13,13 +13,13 @@ def load_data(file_path):
     except FileNotFoundError:
         st.error(f"Error: Could not find the file at {file_path}. Please check the file path.")
         return None
-
 file_path = 'merged_movies_sorted.csv'
+#file_path = r'C:\Users\admin\Music\My\merged_movies_sorted.csv'
 movies_df = load_data(file_path)
 
 if movies_df is not None:
     # Title
-    st.title('IMDb Movies Dataset Dashboard')
+    st.title('IMDb Movies Dashboard')
 
     # Sidebar Filters
     st.sidebar.header('Filters')
@@ -31,7 +31,7 @@ if movies_df is not None:
     # Year Slider
     min_year = int(movies_df['runtime'].min())
     max_year = int(movies_df['runtime'].max())
-    year_range = st.sidebar.slider('Select Year Range', min_year, max_year, (min_year, max_year))
+    year_range = st.sidebar.slider('Select your Duration', min_year, max_year, (min_year, max_year))
 
     # Search Box
     search_term = st.sidebar.text_input('Search Movie Title')
