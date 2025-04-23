@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-#import plotly.express as px
+import plotly.express as px
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
@@ -50,12 +50,12 @@ if movies_df is not None:
     # IMDb Score Distribution Histogram
     st.subheader('IMDb Score Distribution')
     fig = px.histogram(filtered_df, x='imdb_score', nbins=20, title='IMDb Score Distribution')
-    #st.plotly_chart(fig)
+    st.plotly_chart(fig)
 
     # Votes Distribution Histogram
     st.subheader('Votes Distribution')
     fig2 = px.histogram(filtered_df, x='votes', nbins=20, title='Votes Distribution')
-    #st.plotly_chart(fig2)
+    st.plotly_chart(fig2)
 
     # Movie Titles Wordcloud
     st.subheader('Wordcloud of Movie Titles')
