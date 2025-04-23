@@ -13,8 +13,8 @@ def load_data(file_path):
     except FileNotFoundError:
         st.error(f"Error: Could not find the file at {file_path}. Please check the file path.")
         return None
+
 file_path = 'merged_movies_sorted.csv'
-#file_path = r'C:\Users\admin\Music\My\merged_movies_sorted.csv'
 movies_df = load_data(file_path)
 
 if movies_df is not None:
@@ -38,7 +38,9 @@ if movies_df is not None:
 
     # Filter Data
     filtered_df = movies_df[movies_df['genre'].isin(genre_filter)]
-    filtered_df = filtered_df[(movies_df['runtime'] >= year_range[0]) & (movies_df['runtime'] <= year_range[1])]
+    filtered_df = filtered_df[
+        (filtered_df['runtime'] >= year_range[0]) & (filtered_df['runtime'] <= year_range[1])
+    ]
     filtered_df = filtered_df[filtered_df['title'].str.contains(search_term, case=False)]
 
     # Movie Data Table
