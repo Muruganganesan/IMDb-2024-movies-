@@ -44,7 +44,7 @@ if movies_df is not None:
     filtered_df = filtered_df[filtered_df['title'].str.contains(search_term, case=False)]
 
     # Movie Data Table
-    st.subheader('Filtered Movies List')
+    st.subheader('A list of movies that you have filtered for your needs :')
     st.dataframe(filtered_df[['title', 'runtime', 'imdb_score', 'votes', 'genre']])
 
     # IMDb Score Distribution Histogram
