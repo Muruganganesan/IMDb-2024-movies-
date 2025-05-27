@@ -16,9 +16,14 @@ df = load_data()
 
 
 # 1.Top 10 Movies by Rating and Voting Counts:
-st.header("Top 10 Movies by Rating and Voting Counts")
-top_movies = df.sort_values(by=['votes'], ascending=False).head(10)
-st.bar_chart(top_movies[['title', 'votes']].set_index('title'))
+st.header("Top 10 Movies by Voting Counts")
+top_by_votes = df.sort_values(by='votes', ascending=False).head(10)
+st.bar_chart(top_by_votes.set_index('title')['votes'])
+
+st.header("Top 10 Movies by IMDb Score")
+top_by_score = df.sort_values(by='imdb_score', ascending=False).head(10)
+st.bar_chart(top_by_score.set_index('title')['imdb_score'])
+
 
 
 # 2. Genre Distribution: (Animation, Adventure, Fantasy, Family)
