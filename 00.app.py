@@ -21,8 +21,13 @@ top_by_votes = df.sort_values(by='votes', ascending=False).head(10)
 st.bar_chart(top_by_votes.set_index('title')['votes'])
 
 st.header("Top 10 Movies by IMDb Score")
+
+# Sort by IMDb score and get top 10
 top_by_score = df.sort_values(by='imdb_score', ascending=False).head(10)
+
+# Plot bar chart with movie titles as index
 st.bar_chart(top_by_score.set_index('title')['imdb_score'])
+
 
 
 
