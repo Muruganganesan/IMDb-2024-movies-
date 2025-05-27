@@ -12,11 +12,11 @@ def load_data():
 df = load_data()
 
 # Key Metrics
-    st.subheader('Key Metrics')
-    col1, col2, col3 = st.columns(3)
-    col1.metric('Total Movies', len(filtered_df))
-    col2.metric('Average IMDb Score', round(filtered_df['imdb_score'].mean(), 2))
-    col3.metric('Average Votes', int(filtered_df['votes'].mean()))
+st.subheader('Key Metrics')
+col1, col2, col3 = st.columns(3)
+col1.metric('Total Movies', len(filtered_df))
+col2.metric('Average IMDb Score', round(filtered_df['imdb_score'].mean(), 2))
+col3.metric('Average Votes', int(filtered_df['votes'].mean()))
 
 # 1.Top 10 Movies by Rating and Voting Counts:
 st.header("Top 10 Movies by Voting Counts")
