@@ -50,7 +50,14 @@ st.table(top_genre_movies[['genre', 'title', 'imdb_score']])
 # 7. Most Popular Genres by Voting:
 st.header("Most Popular Genres by Voting:")
 genre_total_votes = df.groupby('genre')['votes'].sum().nlargest(5)
-st.pyplot(genre_total_votes.plot.pie(autopct="%1.1f%%").figure)
+
+fig, ax = plt.subplots()
+ax.pie(genre_total_votes, labels=genre_total_votes.index, autopct="%1.1f%%", startangle=90)
+ax.set_title("Top 5 Genres by Total Votes")
+ax.axis('equal')  # Ensures pie is drawn as a circle
+
+st.pyplot(fig)
+
 
 # 8. Duration Extremes:
 st.header("Duration Extremes:")
