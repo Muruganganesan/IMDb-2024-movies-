@@ -101,33 +101,10 @@ fig, ax = plt.subplots(figsize=(8, 2))
 sns.heatmap(heatmap_data, annot=True, fmt=".2f", cmap="YlGnBu", cbar=True, ax=ax)
 ax.set_ylabel('')
 ax.set_xlabel('Genre')
-ax.set_title('Average IMDb Rating by Genre (Selected Genres Only)')
+ax.set_title('Average IMDb Rating by Genre')
 
 st.pyplot(fig)
 st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
-
-# 9.1 Average IMDb Rating by Genre
-# App title
-st.title('Average IMDb Ratings by Genre')
-
-# Genre selection
-selected_genres = ['Animation', 'Adventure', 'Fantasy', 'Family']
-df_filtered = df[df['genre'].isin(selected_genres)]
-
-# Compute average ratings
-average_ratings = df_filtered.groupby('genre')['imdb_score'].mean().reset_index()
-
-# Prepare data for heatmap
-heatmap_data = average_ratings.pivot_table(values='imdb_score', columns='genre', aggfunc='mean')
-
-# Plotting
-fig, ax = plt.subplots(figsize=(8, 6))
-sns.heatmap(heatmap_data, annot=True, cmap='coolwarm', cbar=True, linewidths=0.5, fmt='.2f', ax=ax)
-ax.set_title('Average Ratings by Genre (Animation, Adventure, Fantasy, Family)')
-
-# Show the plot in Streamlit
-st.pyplot(fig)
-
 
 # 10. Correlation Analysis:
 st.header("Correlation Analysis:")
