@@ -108,6 +108,31 @@ ax.set_title('Average IMDb Rating by Genre (Selected Genres Only)')
 st.pyplot(fig)
 st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
 
+# 9.1 Average IMDb Rating by Genre
+st.header("Average IMDb Rating by Genre (Bar Chart)")
+
+# (Assuming df_exploded and filtered_genres from before)
+
+# Calculate average IMDb scores for selected genres
+genre_ratings = filtered_genres.groupby('genre')['imdb_score'].mean().sort_values(ascending=False)
+
+# Plot bar chart
+fig, ax = plt.subplots(figsize=(8, 5))
+bars = ax.bar(genre_ratings.index, genre_ratings.values, color='cornflowerblue')
+ax.set_ylabel('Average IMDb Score')
+ax.set_ylim(0, 10)
+ax.set_title('Average IMDb Rating by Genre')
+
+# Annotate bars with values
+for bar in bars:
+    height = bar.get_height()
+    ax.annotate(f'{height:.2f}', xy=(bar.get_x() + bar.get_width() / 2, height),
+                xytext=(0, 3), textcoords="offset points", ha='center', va='bottom')
+
+st.pyplot(fig)
+
+
+
 # 10. Correlation Analysis:
 st.header("Correlation Analysis:")
 fig, ax = plt.subplots()
