@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-#df = pd.read_csv(r'C:\Users\admin\Music\Guvi\IMDb\merged_movies_sorted.csv')
-
 @st.cache_data
 def load_data():
     data = pd.read_csv("merged_movies_sorted.csv")
@@ -109,23 +107,25 @@ st.pyplot(fig)
 st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
 
 # 9.1 Average IMDb Rating by Genre
-# Streamlit title
-st.title("Average IMDb Score by Genre Heatmap")
+# App title
+st.title('Average IMDb Ratings by Genre')
 
-# genre வாரியாக imdb_score சராசரி கணக்கிடல்
-avg_scores = df.groupby('genre')['imdb_score'].mean().reset_index()
+# Genre selection
+selected_genres = ['Animation', 'Adventure', 'Fantasy', 'Family']
+df_filtered = df[df['genre'].isin(selected_genres)]
 
-# heatmap க்கு data reshape செய்தல்
-heatmap_data = avg_scores.set_index('genre').T
+# Compute average ratings
+average_ratings = df_filtered.groupby('genre')['imdb_score'].mean().reset_index()
 
-# heatmap வரைபடம் உருவாக்குதல்
-fig, ax = plt.subplots(figsize=(10, 2))
-sns.heatmap(heatmap_data, annot=True, cmap='coolwarm', cbar=True, ax=ax)
-ax.set_yticks([])  # y-axis label தேவையில்லை
-ax.set_xlabel("Genre")
-ax.set_title("Average IMDb Score by Genre")
+# Prepare data for heatmap
+heatmap_data = average_ratings.pivot_table(values='imdb_score', columns='genre', aggfunc='mean')
 
-# Streamlit இல் வரைபடத்தை காட்டுதல்
+# Plotting
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.heatmap(heatmap_data, annot=True, cmap='coolwarm', cbar=True, linewidths=0.5, fmt='.2f', ax=ax)
+ax.set_title('Average Ratings by Genre (Animation, Adventure, Fantasy, Family)')
+
+# Show the plot in Streamlit
 st.pyplot(fig)
 
 
