@@ -106,6 +106,7 @@ ax.set_xlabel('Genre')
 ax.set_title('Average IMDb Rating by Genre (Selected Genres Only)')
 
 st.pyplot(fig)
+st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
 
 # 10. Correlation Analysis:
 st.header("Correlation Analysis:")
