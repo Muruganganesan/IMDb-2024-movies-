@@ -6,7 +6,7 @@ import numpy as np
 
 @st.cache_data
 def load_data():
-    data = pd.read_csv("merged_movies_sorted.csv")
+    data = pd.read_csv("1.merged_movies_sorted.csv")
     return data
 
 df = load_data()
