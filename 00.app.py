@@ -46,7 +46,7 @@ with col6:
 
 
 # 1.Top 10 Movies by Rating and Voting Counts:
-st.header("Top 10 Movies by Voting Counts")
+st.header("1.Top 10 Movies by Voting Counts")
 top_by_votes = df.sort_values(by='votes', ascending=False).head(10)
 st.bar_chart(top_by_votes.set_index('title')['votes'])
 
@@ -68,35 +68,35 @@ for bar in bars:
 st.pyplot(fig)
 
 # 2. Genre Distribution: (Animation, Adventure, Fantasy, Family)
-st.header("Genre Distribution")
+st.header("2.Genre Distribution")
 filtered_genres = df[df['genre'].isin(['Animation', 'Adventure', 'Fantasy', 'Family'])]
 genre_counts = filtered_genres['genre'].value_counts()
 st.bar_chart(genre_counts)
 
 # 3. Average Duration by Genre:
-st.header("Average Duration by Genre:")
+st.header("3.Average Duration by Genre:")
 genre_duration = filtered_genres.groupby('genre')['runtime'].mean()
 st.bar_chart(genre_duration)
 
 # 4. Voting Trends by Genre:
-st.header("Voting Trends by Genre:")
+st.header("4.Voting Trends by Genre:")
 genre_votes = df.groupby('genre')['votes'].mean().sort_values(ascending=False)
 st.bar_chart(genre_votes.head(10))
 
 # 5. Rating Distribution:
-st.header("Rating Distribution:")
+st.header("5.Rating Distribution:")
 filtered_df = df[df['imdb_score'] > 0]  # 0 ரேட்டிங்கைத் தவிர்க்க
 fig, ax = plt.subplots()
 sns.histplot(filtered_df['imdb_score'], bins=20, kde=True, ax=ax)
 st.pyplot(fig)
 
 # 6. Genre-Based Rating Leaders:
-st.header("Genre-Based Rating Leaders:")
+st.header("6.Genre-Based Rating Leaders:")
 top_genre_movies = filtered_genres.loc[filtered_genres.groupby('genre')['imdb_score'].idxmax()]
 st.table(top_genre_movies[['genre', 'title', 'imdb_score']])
 
 # 7. Most Popular Genres by Voting:
-st.header("Most Popular Genres by Voting:")
+st.header("7.Most Popular Genres by Voting:")
 genre_total_votes = df.groupby('genre')['votes'].sum().nlargest(5)
 
 fig, ax = plt.subplots()
@@ -108,12 +108,12 @@ st.pyplot(fig)
 
 
 # 8. Duration Extremes:
-st.header("Duration Extremes:")
+st.header("8.Duration Extremes:")
 duration_stats = df[['title', 'runtime']].sort_values('runtime')
 st.table(pd.concat([duration_stats.head(3), duration_stats.tail(3)]))
 
 # 9. Ratings by Genre:
-st.header("Ratings by Genre (Heatmap Comparison)")
+st.header("9.Ratings by Genre (Heatmap Comparison)")
 
 # Step 1: Split multi-genre strings and explode
 df_genres = df.copy()
@@ -139,7 +139,7 @@ st.pyplot(fig)
 st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
 
 # 10. Correlation Analysis:
-st.header("Correlation Analysis:")
+st.header("10.Correlation Analysis:")
 fig, ax = plt.subplots()
 sns.scatterplot(data=df, x='imdb_score', y='votes', alpha=0.5, ax=ax)
 st.pyplot(fig)
