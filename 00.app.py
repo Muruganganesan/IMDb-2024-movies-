@@ -109,28 +109,24 @@ st.pyplot(fig)
 st.dataframe(genre_ratings.round(3).reset_index().rename(columns={'genre': 'Genre', 'imdb_score': 'Avg IMDb Score'}))
 
 # 9.1 Average IMDb Rating by Genre
-st.header("Average IMDb Rating by Genre (Bar Chart)")
+# Streamlit title
+st.title("Average IMDb Score by Genre Heatmap")
 
-# (Assuming df_exploded and filtered_genres from before)
+# genre வாரியாக imdb_score சராசரி கணக்கிடல்
+avg_scores = df.groupby('genre')['imdb_score'].mean().reset_index()
 
-# Calculate average IMDb scores for selected genres
-genre_ratings = filtered_genres.groupby('genre')['imdb_score'].mean().sort_values(ascending=False)
+# heatmap க்கு data reshape செய்தல்
+heatmap_data = avg_scores.set_index('genre').T
 
-# Plot bar chart
-fig, ax = plt.subplots(figsize=(8, 5))
-bars = ax.bar(genre_ratings.index, genre_ratings.values, color='cornflowerblue')
-ax.set_ylabel('Average IMDb Score')
-ax.set_ylim(0, 10)
-ax.set_title('Average IMDb Rating by Genre')
+# heatmap வரைபடம் உருவாக்குதல்
+fig, ax = plt.subplots(figsize=(10, 2))
+sns.heatmap(heatmap_data, annot=True, cmap='coolwarm', cbar=True, ax=ax)
+ax.set_yticks([])  # y-axis label தேவையில்லை
+ax.set_xlabel("Genre")
+ax.set_title("Average IMDb Score by Genre")
 
-# Annotate bars with values
-for bar in bars:
-    height = bar.get_height()
-    ax.annotate(f'{height:.2f}', xy=(bar.get_x() + bar.get_width() / 2, height),
-                xytext=(0, 3), textcoords="offset points", ha='center', va='bottom')
-
+# Streamlit இல் வரைபடத்தை காட்டுதல்
 st.pyplot(fig)
-
 
 
 # 10. Correlation Analysis:
