@@ -20,13 +20,23 @@ st.header("Top 10 Movies by Voting Counts")
 top_by_votes = df.sort_values(by='votes', ascending=False).head(10)
 st.bar_chart(top_by_votes.set_index('title')['votes'])
 
-st.header("Top 10 Movies by IMDb Score")
+st.header("Top 10 Movies by IMDb Score (Correct Bar Length)")
 
-# Sort by IMDb score and get top 10
 top_by_score = df.sort_values(by='imdb_score', ascending=False).head(10)
 
-# Plot bar chart with movie titles as index
-st.bar_chart(top_by_score.set_index('title')['imdb_score'])
+fig, ax = plt.subplots(figsize=(10, 6))
+bars = ax.barh(top_by_score['title'], top_by_score['imdb_score'], color='mediumseagreen')
+ax.set_xlabel('IMDb Score')
+ax.set_title('Top 10 Movies by IMDb Score')
+ax.invert_yaxis()  # Highest score on top
+
+# Optional: Add score labels at end of bars
+for bar in bars:
+    width = bar.get_width()
+    ax.text(width + 0.05, bar.get_y() + bar.get_height()/2, f'{width:.1f}', va='center')
+
+st.pyplot(fig)
+
 
 
 
