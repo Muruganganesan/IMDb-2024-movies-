@@ -11,7 +11,7 @@ def load_data():
 
 df = load_data()
 
-st.title("IMDB 2024 Data scraping & visualization")
+st.title("IMDB 2024 Data visualization")
 
 # Display Key Metrics
 st.header("🎯 Key Metrics")
