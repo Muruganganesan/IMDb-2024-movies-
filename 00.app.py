@@ -3,7 +3,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df = pd.read_csv(r'C:\Users\admin\Music\Guvi\IMDb\merged_movies_sorted.csv')
+#df = pd.read_csv(r'C:\Users\admin\Music\Guvi\IMDb\merged_movies_sorted.csv')
+
+@st.cache_data
+def load_data():
+    data = pd.read_csv("merged_movies_sorted.csv")
+    return data
+
+df = load_data()
+
+
 
 # 1.Top 10 Movies by Rating and Voting Counts:
 st.header("Top 10 Movies by Rating and Voting Counts")
