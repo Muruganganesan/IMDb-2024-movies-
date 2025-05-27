@@ -16,27 +16,9 @@ df = load_data()
 
 
 # 1.Top 10 Movies by Rating and Voting Counts:
-st.header("Top 10 Movies by Rating and Voting Counts (Grouped Bar Chart)")
-
-top_movies = df.sort_values(by=['imdb_score', 'votes'], ascending=False).head(10)
-titles = top_movies['title']
-ratings = top_movies['imdb_score']
-votes = top_movies['votes'] / 1000  # Scale down votes to align better with rating scale
-
-x = np.arange(len(titles))
-width = 0.35
-
-fig, ax = plt.subplots(figsize=(10, 6))
-bar1 = ax.bar(x - width/2, ratings, width, label='IMDb Score')
-bar2 = ax.bar(x + width/2, votes, width, label='Votes (x1000)')
-
-ax.set_ylabel('Values')
-ax.set_title('Top 10 Movies by IMDb Score and Votes')
-ax.set_xticks(x)
-ax.set_xticklabels(titles, rotation=45, ha='right')
-ax.legend()
-
-st.pyplot(fig)
+st.header("Top 10 Movies by Rating and Voting Counts")
+top_movies = df.sort_values(by=['votes'], ascending=False).head(10)
+st.bar_chart(top_movies[['title', 'votes']].set_index('title'))
 
 
 # 2. Genre Distribution: (Animation, Adventure, Fantasy, Family)
