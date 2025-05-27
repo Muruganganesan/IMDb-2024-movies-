@@ -89,20 +89,27 @@ st.table(pd.concat([duration_stats.head(3), duration_stats.tail(3)]))
 # 9. Ratings by Genre:
 st.header("Ratings by Genre (Heatmap Comparison)")
 
-# Calculate average IMDb score per genre
-genre_ratings = filtered_genres.groupby('genre')['imdb_score'].mean().sort_values(ascending=False)
+# Define the target genres
+target_genres = ['Animation', 'Adventure', 'Fantasy', 'Family']
 
-# Reshape for a 1-row heatmap
-heatmap_data = pd.DataFrame(genre_ratings).T  # Transpose to make genres columns
+# Filter the data for those genres only
+selected_genres_df = df[df['genre'].isin(target_genres)]
 
-# Create heatmap
-fig, ax = plt.subplots(figsize=(12, 2))  # Wide and short for a clean horizontal heatmap
+# Compute average IMDb score for each of those genres
+genre_ratings = selected_genres_df.groupby('genre')['imdb_score'].mean().sort_values(ascending=False)
+
+# Reshape for heatmap (1-row layout with genres as columns)
+heatmap_data = pd.DataFrame(genre_ratings).T  # Transpose so genres are columns
+
+# Plot heatmap
+fig, ax = plt.subplots(figsize=(8, 2))
 sns.heatmap(heatmap_data, annot=True, fmt=".1f", cmap="YlGnBu", cbar=True, ax=ax)
 ax.set_ylabel('')
 ax.set_xlabel('Genre')
-ax.set_title('Average IMDb Rating by Genre')
+ax.set_title('Average IMDb Rating: Animation, Adventure, Fantasy, Family')
 
 st.pyplot(fig)
+
 
 
 # 10. Correlation Analysis:
