@@ -11,6 +11,37 @@ def load_data():
 
 df = load_data()
 
+# Display Key Metrics
+st.header("🎯 Key Metrics")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(label="Total Movies", value=f"{len(df):,}")
+
+with col2:
+    avg_score = df['imdb_score'].mean()
+    st.metric(label="Average IMDb Score", value=f"{avg_score:.2f}")
+
+with col3:
+    highest_score = df['imdb_score'].max()
+    st.metric(label="Highest IMDb Score", value=f"{highest_score:.1f}")
+    
+col4, col5, col6 = st.columns(3)
+
+with col4:
+    total_votes = df['votes'].sum()
+    st.metric(label="Total Votes", value=f"{total_votes:,}")
+
+with col5:
+    longest_runtime = df['runtime'].max()
+    st.metric(label="Longest Runtime (min)", value=f"{longest_runtime:.0f}")
+
+with col6:
+    shortest_runtime = df['runtime'].min()
+    st.metric(label="Shortest Runtime (min)", value=f"{shortest_runtime:.0f}")
+
+
 
 # 1.Top 10 Movies by Rating and Voting Counts:
 st.header("Top 10 Movies by Voting Counts")
