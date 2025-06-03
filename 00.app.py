@@ -50,7 +50,7 @@ st.header("1.Top 10 Movies by Voting Counts")
 top_by_votes = df.sort_values(by='votes', ascending=False).head(10)
 st.bar_chart(top_by_votes.set_index('title')['votes'])
 
-st.header("Top 10 Movies by IMDb Score (Correct Bar Length)")
+st.header("Top 10 Movies by IMDb Score")
 
 top_by_score = df.sort_values(by='imdb_score', ascending=False).head(10)
 
