@@ -8,10 +8,54 @@ import numpy as np
 def load_data():
     data = pd.read_csv("1.merged_movies_sorted.csv")
     return data
+#1.merged_movies_sorted.csv
 
 df = load_data()
 
 st.title("IMDB 2024 Data visualization")
+
+# 🔍 Advanced Interactive Filtering
+st.header("🎛️ Advanced Movie Filter")
+
+# Get all unique genres from exploded genres (comma-separated -> list)
+all_genres = df['genre'].dropna().str.split(',\s*').explode().unique()
+selected_genres = st.multiselect("Select Genre(s):", sorted(all_genres))
+
+# Duration Filtering
+duration_option = st.selectbox("Select Duration Range (Hours):", ["All", "< 2 hrs", "2–3 hrs", "> 3 hrs"])
+
+# IMDb Score Filtering
+min_rating = st.slider("Minimum IMDb Rating", 0.0, 10.0, 0.0, step=0.1)
+
+# Voting Count Filtering
+min_votes = st.number_input("Minimum Number of Votes", min_value=0, value=0, step=1000)
+
+# 🧹 Apply Filters
+filtered_df = df.copy()
+
+# Duration Filtering
+if duration_option == "< 2 hrs":
+    filtered_df = filtered_df[filtered_df['runtime'] < 120]
+elif duration_option == "2–3 hrs":
+    filtered_df = filtered_df[(filtered_df['runtime'] >= 120) & (filtered_df['runtime'] <= 180)]
+elif duration_option == "> 3 hrs":
+    filtered_df = filtered_df[filtered_df['runtime'] > 180]
+
+# Rating & Votes Filtering
+filtered_df = filtered_df[(filtered_df['imdb_score'] >= min_rating) & (filtered_df['votes'] >= min_votes)]
+
+# Genre Filtering - Split multi-genre strings and match any
+if selected_genres:
+    filtered_df = filtered_df[
+        filtered_df['genre'].apply(
+            lambda g: any(genre.strip() in selected_genres for genre in str(g).split(','))
+        )
+    ]
+
+# 📋 Display Filtered Results
+st.subheader(f"Filtered Movies ({len(filtered_df):,} results)")
+st.dataframe(filtered_df[['title', 'genre', 'runtime', 'imdb_score', 'votes']].reset_index(drop=True))
+
 
 # Display Key Metrics
 st.header("🎯 Key Metrics")
