@@ -188,3 +188,4 @@ fig, ax = plt.subplots()
 sns.scatterplot(data=df, x='imdb_score', y='votes', alpha=0.5, ax=ax)
 st.pyplot(fig)
 
+
